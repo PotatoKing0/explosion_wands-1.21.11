@@ -2,6 +2,7 @@ package com.fireball_stick;
 
 import net.fabricmc.api.ModInitializer;
 
+import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.Registries;
@@ -31,6 +32,9 @@ public class FireballStickClickBlock implements ModInitializer {
 
 	private static ResourceKey<Item> modItemId(final String name) {
 		return ResourceKey.create(Registries.ITEM, Identifier.fromNamespaceAndPath(MOD_ID, name));
+	}
+
+	public static void registerModItems() {
 	}
 	//Hits a block
 	public static InteractionResult useOn(FireballStickItem FireballStickItem, UseOnContext context)  {
