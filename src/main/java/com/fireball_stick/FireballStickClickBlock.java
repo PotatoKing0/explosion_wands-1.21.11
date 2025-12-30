@@ -22,20 +22,20 @@ import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 
+import static net.minecraft.world.item.Items.registerItem;
+
 public class FireballStickClickBlock implements ModInitializer {
 	public static final String MOD_ID = "fireball_stick";
 
 	@Override
 	public void onInitialize() {
-		Items.registerItem(modItemId("fireball_stick"), FireballStickItem::new, new Item.Properties());
+		registerItem(modItemId("fireball_stick"), FireballStickItem::new, new Item.Properties());
 	}
 
 	private static ResourceKey<Item> modItemId(final String name) {
 		return ResourceKey.create(Registries.ITEM, Identifier.fromNamespaceAndPath(MOD_ID, name));
 	}
 
-	public static void registerModItems() {
-	}
 	//Hits a block
 	public static InteractionResult useOn(FireballStickItem FireballStickItem, UseOnContext context)  {
 
