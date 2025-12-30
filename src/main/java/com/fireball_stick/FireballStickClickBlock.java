@@ -22,6 +22,7 @@ import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 
+import static net.minecraft.world.entity.EntityType.TNT;
 import static net.minecraft.world.item.Items.registerItem;
 
 public class FireballStickClickBlock implements ModInitializer {
@@ -44,17 +45,17 @@ public class FireballStickClickBlock implements ModInitializer {
 		Level level = context.getLevel();
 		Player player = context.getPlayer();
 		PrimedTnt primedTnt = new PrimedTnt(level, clickedPos.getX() + 0.5, clickedPos.getY(), clickedPos.getZ() + 0.5, player);
-
 		//FireChargeItem fireChargeItem = new FireChargeItem(new Item.Properties());
 		if (level instanceof ServerLevel serverLevel && serverLevel.getBlockState(clickedPos).canBeReplaced() && player != null) {
 			//TNT explodes after 0 ticks (instantly)
 			primedTnt.setFuse(0);
 			//Adds the primed TNT to the world
 			serverLevel.addFreshEntity(primedTnt);
+			//serverLevel.explode(serverLevel.getEntity(), clickedPos.getX(), clickedPos.getY(), clickedPos.getZ());
 			//Player animation of using the item
 			player.startUsingItem(context.getHand());
 			//Plays a sound when placed
-			level.playSound((Entity) null, clickedPos.getX() + 0.5, clickedPos.getY(), clickedPos.getZ() + 0.5, SoundEvents.GENERIC_EXPLODE, SoundSource.PLAYERS, 1.0F, 1.0F);
+			level.playSound((Entity) null, clickedPos.getX(), clickedPos.getY(), clickedPos.getZ(), SoundEvents.GENERIC_EXPLODE, SoundSource.PLAYERS, 1.0F, 1.0F);
 			return InteractionResult.SUCCESS;
 		} else {
 			return InteractionResult.CONSUME;

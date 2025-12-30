@@ -38,7 +38,8 @@ public class FireballStickClickAir extends Item {
         BlockHitResult blockHitResult = getPlayerPOVHitResult(level, player, ClipContext.Fluid.NONE);
         //Reach for hitting an entity
         int reach = 10;
-        int explosionPower = 10;
+        int explosionPowerAir = 10;
+        int explosionPowerEntity = 1;
         //fireball's velocity
         int velocity = 10;
         double dirX = player.getX();
@@ -51,7 +52,7 @@ public class FireballStickClickAir extends Item {
         playerLookDir.add(dirX, dirY, dirZ).normalize();
         //playerLookDir.add(0, 1000, 0).normalize();
         //SmallFireball fireball = new SmallFireball(level, dirX, dirY, dirZ, dir.normalize());;
-        LargeFireball fireballAir = new LargeFireball(level, player, playerLookDir, explosionPower);
+        LargeFireball fireballAir = new LargeFireball(level, player, playerLookDir, explosionPowerAir);
         //Target entity
         EntityHitResult entityHitResult = ProjectileUtil.getEntityHitResult(
                 level, fireballAir, playerStartDir, playerEndDir, player.getBoundingBox()
@@ -79,7 +80,7 @@ public class FireballStickClickAir extends Item {
             fireballAir.moveOrInterpolateTo(fireballOnEntityPosition);
             //Evil fake fireball explosion
             level.explode(fireballAir, fireballAir.getX(), fireballAir.getY(), fireballAir.getZ(),
-                    explosionPower, Level.ExplosionInteraction.MOB);
+                    explosionPowerEntity, Level.ExplosionInteraction.MOB);
             //Fireball is fake now, discards it when spawned so it doesn't appear after exploding
             fireballAir.discard();
             //level.playSound(null, dirX + 0.5, dirY, dirZ + 0.5, SoundEvents.PIG_DEATH, SoundSource.NEUTRAL, 1.0F, 1.0F);
