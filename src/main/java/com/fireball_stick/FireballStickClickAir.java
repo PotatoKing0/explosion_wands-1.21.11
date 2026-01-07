@@ -54,9 +54,9 @@ public class FireballStickClickAir extends Item {
         double min = 0.0;
         double max = 10.0;
         RandomSource random = RandomSource.create();
-        double value1 = min + random.nextDouble() * (max - min);
-        double value2 = min + random.nextDouble() * (max - min);
-        double value3 = min + random.nextDouble() * (max - min);
+        double randomDistr1 = min + random.nextDouble() * (max - min);
+        double randomDistr2 = min + random.nextDouble() * (max - min);
+        double randomDistr3 = min + random.nextDouble() * (max - min);
         BlockHitResult blockHitResult = getPlayerPOVHitResult(level, player, ClipContext.Fluid.NONE);
         //Reach for hitting an entity
         int reach = 1000;
@@ -98,7 +98,6 @@ public class FireballStickClickAir extends Item {
             return fireballAir;
         //Hit entity
         } else if(entityHitResult != null) {
-
             Entity target = entityHitResult.getEntity();
             //Changes the fireball's position to the position of the entity we clicked on
             Vec3 fireballOnEntityPosition = target.position();
@@ -110,10 +109,10 @@ public class FireballStickClickAir extends Item {
             if(level instanceof ServerLevel serverLevel) {
                 //serverLevel.sendParticles(ParticleTypes.SOUL_FIRE_FLAME, target.getX(), target.getY(), target.getZ(), 1000, 2, 2, 2, 0);
                 //32 bit integer limit: 2147483647
-                serverLevel.sendParticles(new DustParticleOptions(16711680, 5), target.getX(), target.getY(), target.getZ(), 100, value1, value1, value1, 2);
+                serverLevel.sendParticles(new DustParticleOptions(16711680, 5), target.getX(), target.getY(), target.getZ(), 100, randomDistr1, randomDistr1, randomDistr1, 2);
                 //serverLevel.sendParticles(new DustParticleOptions(10000000, 5), target.getX(), target.getY(), target.getZ(), 1000, 2, 2, 2, 2);
-                serverLevel.sendParticles(new DustParticleOptions(500000, 5), target.getX(), target.getY(), target.getZ(), 100, value2, value2, value2, 2);
-                serverLevel.sendParticles(new DustParticleOptions(3000, 5), target.getX(), target.getY(), target.getZ(), 100, value3, value3, value3, 2);
+                serverLevel.sendParticles(new DustParticleOptions(500000, 5), target.getX(), target.getY(), target.getZ(), 100, randomDistr2, randomDistr2, randomDistr2, 2);
+                serverLevel.sendParticles(new DustParticleOptions(3000, 5), target.getX(), target.getY(), target.getZ(), 100, randomDistr3, randomDistr3, randomDistr3, 2);
             }
             //Fireball is fake now, discards it when spawned so it doesn't appear after exploding
             fireballAir.discard();
