@@ -1,4 +1,4 @@
-package com.fireball_stick;
+package com.fireball_stick.fireballStick;
 
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -19,7 +19,7 @@ public class FireballStickItem extends Item {
     //Click on block
     @Override
     public InteractionResult useOn(UseOnContext context) {
-        return FireballStickClickBlock.useOn(this, context);
+        return FireballStickClickBlock.useOn(context);
     }
 
     //Use animation of item

@@ -1,4 +1,4 @@
-package com.fireball_stick;
+package com.fireball_stick.fireballStick;
 
 import net.minecraft.core.particles.DustParticleOptions;
 import net.minecraft.server.level.ServerLevel;

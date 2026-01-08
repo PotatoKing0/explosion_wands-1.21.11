@@ -1,10 +1,5 @@
-package com.fireball_stick;
+package com.fireball_stick.fireballStick;
 
-import com.fireball_stick.item.ModItems;
-import net.fabricmc.api.ModInitializer;
-
-import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
-import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.particles.ParticleTypes;
@@ -13,7 +8,6 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.PrimedTnt;
 import net.minecraft.world.entity.player.Player;
@@ -22,37 +16,17 @@ import net.minecraft.world.item.component.Consumable;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.phys.Vec3;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
-import javax.swing.*;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Queue;
 
-public class FireballStickClickBlock implements ModInitializer {
-	public static final String MOD_ID = "fireball_stick";
+public class FireballStickClickBlock {
 	private static final List<Runnable> QUEUE = new ArrayList<>();
 	private static int tickCounter = 0;
 	private static int taskCount = 0;
 	private static final Queue<Runnable> nextTickQueue = new ArrayDeque<>();
-
-	@Override
-	public void onInitialize() {
-		ModItems.init();
-
-		//Category: Tools and utilities
-		ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.TOOLS_AND_UTILITIES)
-						.register(entries -> entries.accept(ModItems.FIREBALL_STICK));
-		//Category: Combat
-		ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.COMBAT)
-				.register(entries -> entries.accept(ModItems.FIREBALL_STICK));
-
-		ServerTickEvents.END_SERVER_TICK.register(server -> tick());
-	}
-
 	public static void add(Runnable task) {
 		QUEUE.add(task);
 	}
@@ -71,7 +45,7 @@ public class FireballStickClickBlock implements ModInitializer {
 	}
 
 	//Hits a block
-	public static InteractionResult useOn(FireballStickItem FireballStickItem, UseOnContext context)  {
+	public static InteractionResult useOn(UseOnContext context)  {
 		BlockPlaceContext placeContext = new BlockPlaceContext(context);
 		BlockPos clickedPos = placeContext.getClickedPos();
 		Level level = context.getLevel();
@@ -106,7 +80,9 @@ public class FireballStickClickBlock implements ModInitializer {
 						PrimedTnt primedTnt = new PrimedTnt(level,
 								//X dir: cos, Z dir: sin, makes a circle
 								xDir + (Math.cos(angle[0]) * amplitude),
-								yDir+ 3 + Math.cos(changePosition[0]) * 5,
+
+								//yDir + 3 + Math.cos(changePosition[0]) * 5,
+								yDir + 3,
 								zDir + (Math.sin(angle[0]) * amplitude),
 								player);
 						primedTnt.setFuse(tntFuseTimer);
@@ -155,7 +131,6 @@ public class FireballStickClickBlock implements ModInitializer {
 		return 200;
 	}
 }
-
 
 //TODO:
 //Make it so we can spawn multiple TNT circles at once

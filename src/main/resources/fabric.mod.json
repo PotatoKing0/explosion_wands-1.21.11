@@ -16,7 +16,7 @@
 	"environment": "*",
 	"entrypoints": {
 		"main": [
-			"com.fireball_stick.FireballStickClickBlock"
+          "com.fireball_stick.initialization.ModInitialization"
 		]
 	},
 	"mixins": [
