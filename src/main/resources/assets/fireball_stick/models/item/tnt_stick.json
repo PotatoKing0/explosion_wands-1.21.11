@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "fireball_stick:item/destruction_stick"
+    "layer0": "fireball_stick:item/tnt_stick"
   }
 }

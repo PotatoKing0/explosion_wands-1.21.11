@@ -1,5 +1,6 @@
-package com.fireball_stick.fireballStick;
+package com.fireball_stick.fireball_stick;
 
+import com.fireball_stick.abstractClasses.BaseAsFireballProjectile;
 import net.minecraft.core.particles.DustParticleOptions;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
@@ -18,11 +19,11 @@ import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
-import net.minecraft.world.phys.HitResult.Type;
+import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 
 public class FireballStickClickAir extends Item {
-    public FireballStickClickAir(Item.Properties properties) {
+    public FireballStickClickAir(Properties properties) {
         super(properties);
     }
 
@@ -30,14 +31,14 @@ public class FireballStickClickAir extends Item {
     public static InteractionResult use(Item item, Level level, Player player, InteractionHand hand) {
         //ItemStack itemStack = player.getItemInHand(hand);
         BlockHitResult hitResult = getPlayerPOVHitResult(level, player, ClipContext.Fluid.NONE);
-        if (hitResult.getType() != Type.BLOCK && !level.isClientSide()) {
+        if (hitResult.getType() != HitResult.Type.BLOCK && !level.isClientSide()) {
             return InteractionResult.SUCCESS;
         } else {
             return InteractionResult.CONSUME;
         }
     }
 
-    public static Projectile asProjectile(Item item, Level level, Player player, InteractionHand hand) {
+    public static Projectile asFireballProjectile(Item item, Level level, Player player, InteractionHand hand) {
         double min = 0.0;
         double max = 10.0;
         RandomSource random = RandomSource.create();
@@ -48,7 +49,7 @@ public class FireballStickClickAir extends Item {
         //Max distance we can click on an entity
         int reach = 1000;
         //Clicks on air/liquid
-        int explosionPowerAir = 10;
+        int explosionPowerAir = 80;
         //Clicks on entity
         int explosionPowerEntity = 1;
         //fireball's velocity
@@ -72,7 +73,7 @@ public class FireballStickClickAir extends Item {
                         .expandTowards(playerLookDir.scale(reach)).inflate(1.0),
                 entity -> entity instanceof LivingEntity && entity != player);
         //Click on air/liquid
-        if (blockHitResult.getType() != Type.BLOCK && entityHitResult == null) {
+        if (blockHitResult.getType() != HitResult.Type.BLOCK && entityHitResult == null) {
             //Fireball's initial spawn position
             Vec3 fireballInAirPosition = player.position().add(0, player.getEyeHeight() - 0.25, 0)
                     .add(playerLookDir.scale(2.5));
@@ -84,7 +85,7 @@ public class FireballStickClickAir extends Item {
             level.playSound(null, player.getX(), player.getY(), player.getZ(),
                     SoundEvents.FIRECHARGE_USE, SoundSource.PLAYERS, 1.0F, 1.0F);
             return fireballAir;
-        //Click on entity
+            //Click on entity
         } else if(entityHitResult != null) {
             Entity target = entityHitResult.getEntity();
             //Changes the fireball's position to the position of the entity we clicked on
@@ -111,11 +112,4 @@ public class FireballStickClickAir extends Item {
             return null;
         }
     }
-
 }
-
-//TODO:
-//Remove the fire shooting the projectile causes to improve performance
-//Make it be able to destroy bedrock or any other block
-//Make it so that it can spawn and shoot out other types of entities (maybe a different item)
-//Make it so we can explode mountable entities

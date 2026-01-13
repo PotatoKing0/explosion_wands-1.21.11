@@ -1,4 +1,4 @@
-package com.fireball_stick.fireballStick;
+package com.fireball_stick.tnt_stick;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.component.DataComponents;
@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Queue;
 
-public class FireballStickClickBlock {
+public class TNTStickClickBlock {
 	private static final List<Runnable> QUEUE = new ArrayList<>();
 	private static int tickCounter = 0;
 	private static int taskCount = 0;
@@ -51,12 +51,10 @@ public class FireballStickClickBlock {
 		Level level = context.getLevel();
 		Player player = context.getPlayer();
 
-		if (level instanceof ServerLevel serverLevel && serverLevel.getBlockState(clickedPos).canBeReplaced() && player != null && !level.isClientSide()) {
+		if (level instanceof ServerLevel serverLevel && player != null && !level.isClientSide()) {
 			double xDir = clickedPos.getX();
 			double yDir = clickedPos.getY();
 			double zDir = clickedPos.getZ();
-			//Obsolete. New placement time is purely tick based
-			int timeBetweenEachTntPlacement = 30; //milliseconds
 			int tntAmount = 100;
 			double min = 1.0;
 			double max = 4.0;
@@ -70,7 +68,6 @@ public class FireballStickClickBlock {
 			//Making sure the primed TNTs explode when all the primed TNTs in the current loop has spawned
 			int tntFuseTimer = (tntAmount * 50) / 50 ; //50 ms = 1 tick
 			final double[] changePosition = {0}; //Initial position of the starting TNT
-			//List<PrimedTnt> trackedTnt = new ArrayList<>();
 				for (int i = 0; i < tntAmount; i++) {
 						//Fires a TNT at the interval specified in tick()
 					int finalI = i;
@@ -80,9 +77,7 @@ public class FireballStickClickBlock {
 						PrimedTnt primedTnt = new PrimedTnt(level,
 								//X dir: cos, Z dir: sin, makes a circle
 								xDir + (Math.cos(angle[0]) * amplitude),
-
-								//yDir + 3 + Math.cos(changePosition[0]) * 5,
-								yDir + 3,
+								yDir + 3 + Math.cos(changePosition[0]) * 5,
 								zDir + (Math.sin(angle[0]) * amplitude),
 								player);
 						primedTnt.setFuse(tntFuseTimer);
@@ -93,20 +88,6 @@ public class FireballStickClickBlock {
 							//Particles only spawn 32 blocks away from the player. Might bypass in future
 							serverLevel.sendParticles(ParticleTypes.COPPER_FIRE_FLAME, primedTnt.getX(), primedTnt.getY(), primedTnt.getZ(), 700, randomDistr, randomDistr, randomDistr, 1);
 						}
-						/*
-						trackedTnt.add(primedTnt);
-						ServerTickEvents.END_SERVER_TICK.register(server -> {
-							trackedTnt.removeIf(tnt -> {
-								if(!tnt.isAlive()) {
-									serverLevel.sendParticles(ParticleTypes.FLAME, primedTnt.getX(), primedTnt.getY(), primedTnt.getZ(), 700, randomDistr, randomDistr, randomDistr, 1);
-									System.out.println("hei");
-									return true;
-								} else {
-									return false;
-								}
-							});
-						});
-						 */
 						//Changes the initial angle by the value of angleStep every iteration so the TNTs are not static
 						angle[0] += angleStep;
 						//Height of the cos curve every iteration
@@ -120,6 +101,7 @@ public class FireballStickClickBlock {
 			return InteractionResult.CONSUME;
 		}
 	}
+
 	//Use animation of item
 	public static ItemUseAnimation useAnimation(Item item, ItemStack itemStack) {
 		Consumable consumable = (Consumable)itemStack.get(DataComponents.CONSUMABLE);
@@ -131,6 +113,3 @@ public class FireballStickClickBlock {
 		return 200;
 	}
 }
-
-//TODO:
-//Make it so we can spawn multiple TNT circles at once

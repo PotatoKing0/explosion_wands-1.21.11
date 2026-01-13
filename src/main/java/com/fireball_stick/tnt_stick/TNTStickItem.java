@@ -1,4 +1,4 @@
-package com.fireball_stick.fireballStick;
+package com.fireball_stick.tnt_stick;
 
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -11,38 +11,27 @@ import net.minecraft.world.item.ItemUseAnimation;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 
-public class FireballStickItem extends Item {
-    public FireballStickItem(Item.Properties properties) {
+public class TNTStickItem extends Item {
+    public TNTStickItem(Item.Properties properties) {
         super(properties);
     }
 
     //Click on block
+
     @Override
     public InteractionResult useOn(UseOnContext context) {
-        return FireballStickClickBlock.useOn(context);
+        return TNTStickClickBlock.useOn(context);
     }
 
     //Use animation of item
     @Override
     public ItemUseAnimation getUseAnimation(ItemStack itemStack) {
-        return FireballStickClickBlock.useAnimation(this, itemStack);
+        return TNTStickClickBlock.useAnimation(this, itemStack);
     }
 
     //How fast we can use the item
     @Override
     public int getUseDuration(ItemStack itemStack, LivingEntity user) {
-        return FireballStickClickBlock.useDuration(this, itemStack, user);
-    }
-
-    //Click on air/liquid/entity
-    @Override
-    public InteractionResult use(Level level, Player player, InteractionHand hand) {
-        if (!level.isClientSide()) {
-            Projectile projectile = FireballStickClickAir.asProjectile(this, level, player, hand);
-            if (projectile != null) {
-                level.addFreshEntity(projectile);
-            }
-        }
-        return FireballStickClickAir.use(this, level, player, hand);
+        return TNTStickClickBlock.useDuration(this, itemStack, user);
     }
 }
