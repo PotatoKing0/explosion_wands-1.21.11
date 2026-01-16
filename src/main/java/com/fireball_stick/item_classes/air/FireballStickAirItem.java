@@ -1,24 +1,16 @@
-package com.fireball_stick.fireball_stick;
+package com.fireball_stick.item_classes.air;
 
-import com.fireball_stick.fireball_stick.FireballStickClickAir;
+import com.fireball_stick.sticks_click_air.FireballStickClickAir;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 
-public class FireballStickItem extends Item {
-    public FireballStickItem(Properties properties) {
+public class FireballStickAirItem extends Item {
+    public FireballStickAirItem(Properties properties) {
         super(properties);
-    }
-
-    //Click on block
-
-    @Override
-    public InteractionResult useOn(UseOnContext context) {
-        return FireballStickClickBlock.useOn(context);
     }
 
     //Click on air/liquid/entity

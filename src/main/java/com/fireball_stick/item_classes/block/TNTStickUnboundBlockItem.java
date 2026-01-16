@@ -1,11 +1,12 @@
-package com.fireball_stick.tnt_stick_unbound;
+package com.fireball_stick.item_classes.block;
 
+import com.fireball_stick.sticks_click_block.TNTStickUnboundClickBlock;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.context.UseOnContext;
 
-public class TNTStickUnboundItem extends Item {
-    public TNTStickUnboundItem(Item.Properties properties) {
+public class TNTStickUnboundBlockItem extends Item {
+    public TNTStickUnboundBlockItem(Item.Properties properties) {
         super(properties);
     }
 

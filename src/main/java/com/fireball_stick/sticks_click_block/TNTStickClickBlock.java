@@ -1,6 +1,6 @@
-package com.fireball_stick.tnt_stick;
+package com.fireball_stick.sticks_click_block;
 
-import com.fireball_stick.customFunctions.CustomTnt;
+import com.fireball_stick.customFunctions.tnt.CustomTnt;
 import com.fireball_stick.entity.ModEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.component.DataComponents;
@@ -11,16 +11,13 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.EntitySpawnReason;
-import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.item.PrimedTnt;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.component.Consumable;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.storage.ValueInput;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
@@ -57,8 +54,8 @@ public class TNTStickClickBlock {
 		Player player = context.getPlayer();
 
 		if (level instanceof ServerLevel serverLevel && player != null && !level.isClientSide()) {
-			float explosionPower = 5F;
-			double defaultGravity = 0.04;
+			float explosionPower = 4.0F;
+			double gravity = 0.04F;
 			boolean explodeOnContact = false;
 			double xDir = clickedPos.getX();
 			double yDir = clickedPos.getY();
@@ -97,6 +94,7 @@ public class TNTStickClickBlock {
 						}
 						customTnt.setExplosionPower(explosionPower);
 						customTnt.setExplodeOnContact(explodeOnContact);
+						customTnt.setDefaultGravity(gravity);
 						//Changes the initial angle by the value of angleStep every iteration so the TNTs are not static
 						angle[0] += angleStep;
 						//Height of the cos curve every iteration

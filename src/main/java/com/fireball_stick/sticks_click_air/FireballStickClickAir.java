@@ -1,6 +1,6 @@
-package com.fireball_stick.fireball_stick;
+package com.fireball_stick.sticks_click_air;
 
-import com.fireball_stick.abstractClasses.BaseAsFireballProjectile;
+import com.fireball_stick.sticks_click_block.FireballStickClickBlock;
 import net.minecraft.core.particles.DustParticleOptions;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
@@ -15,6 +15,7 @@ import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.entity.projectile.ProjectileUtil;
 import net.minecraft.world.entity.projectile.hurtingprojectile.LargeFireball;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.BlockHitResult;
@@ -83,7 +84,7 @@ public class FireballStickClickAir extends Item {
             fireballAir.setDeltaMovement(playerLookDir.scale(velocity));
             //Plays sound when cliking on air/liquid
             level.playSound(null, player.getX(), player.getY(), player.getZ(),
-                    SoundEvents.FIRECHARGE_USE, SoundSource.PLAYERS, 1.0F, 1.0F);
+                    SoundEvents.FIRECHARGE_USE, SoundSource.PLAYERS, 0.6F, 1.0F);
             //Spawns the fireball
             return fireballAir;
             //Click on entity
@@ -114,3 +115,4 @@ public class FireballStickClickAir extends Item {
         }
     }
 }
+//TODO: Able to hit entities through blocks, maybe remove

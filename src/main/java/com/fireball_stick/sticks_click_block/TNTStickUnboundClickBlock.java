@@ -1,15 +1,13 @@
-package com.fireball_stick.tnt_stick_unbound;
+package com.fireball_stick.sticks_click_block;
 
-import com.fireball_stick.customFunctions.CustomTnt;
+import com.fireball_stick.customFunctions.tnt.CustomTnt;
 import com.fireball_stick.entity.ModEntities;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.EntitySpawnReason;
-import net.minecraft.world.entity.item.PrimedTnt;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.item.context.UseOnContext;
@@ -25,9 +23,6 @@ public class TNTStickUnboundClickBlock {
         Player player = context.getPlayer();
 
         if (level instanceof ServerLevel serverLevel && serverLevel.getBlockState(clickedPos).canBeReplaced() && player != null && !level.isClientSide()) {
-            float explosionPower = 5F;
-            double defaultGravity = 0.04;
-            boolean explodeOnContact = false;
             double xDir = clickedPos.getX();
             double yDir = clickedPos.getY();
             double zDir = clickedPos.getZ();
@@ -48,8 +43,9 @@ public class TNTStickUnboundClickBlock {
                         yDir + 3,
                         zDir + (Math.sin(angle[0]) * amplitude));
                     customTnt.setFuse(tntFuseTimer);
-                    customTnt.setExplosionPower(explosionPower);
-                    customTnt.setExplodeOnContact(explodeOnContact);
+                    customTnt.setExplosionPower(4.0F);
+                    customTnt.setExplodeOnContact(true);
+                    customTnt.setDefaultGravity(0.04);
                     //Adds the primed TNT to the world
                     serverLevel.addFreshEntity(customTnt);
                     //Changes the initial angle by the value of angleStep every iteration so the TNTs are not static
@@ -64,5 +60,4 @@ public class TNTStickUnboundClickBlock {
             return InteractionResult.CONSUME;
         }
     }
-
 }

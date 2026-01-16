@@ -5,38 +5,57 @@ import com.fireball_stick.item.ModItems;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
-import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.CreativeModeTabs;
 
-import static com.fireball_stick.tnt_stick.TNTStickClickBlock.tick;
+import static com.fireball_stick.sticks_click_block.TNTStickClickBlock.tick;
 
 public class ModInitialization implements ModInitializer {
     public static final String MOD_ID = "fireball_stick";
 
     public void onInitialize() {
         ModItems.init();
-
-        //TNT STICK
-        ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.TOOLS_AND_UTILITIES)
-                .register(entries -> entries.accept(ModItems.TNT_STICK));
-        ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.COMBAT)
-                .register(entries -> entries.accept(ModItems.TNT_STICK));
-
-        //TNT STICK UNBOUND
-        ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.TOOLS_AND_UTILITIES)
-                .register(entries -> entries.accept(ModItems.TNT_STICK_UNBOUND));
-        ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.COMBAT)
-                .register(entries -> entries.accept(ModItems.TNT_STICK_UNBOUND));
-
-        //FIREBALL STICK
-        ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.TOOLS_AND_UTILITIES)
-                .register(entries -> entries.accept(ModItems.FIREBALL_STICK));
-        ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.COMBAT)
-                .register(entries -> entries.accept(ModItems.FIREBALL_STICK));
-
-
         //CUSTOM TNT
         ModEntities.init();
+
+//AIR
+
+        //TNT STICK AIR
+        ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.TOOLS_AND_UTILITIES)
+                .register(entries -> entries.accept(ModItems.TNT_STICK_AIR));
+        ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.COMBAT)
+                .register(entries -> entries.accept(ModItems.TNT_STICK_AIR));
+
+        //TNT STICK UNBOUND AIR
+        ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.TOOLS_AND_UTILITIES)
+                .register(entries -> entries.accept(ModItems.TNT_STICK_UNBOUND_AIR));
+        ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.COMBAT)
+                .register(entries -> entries.accept(ModItems.TNT_STICK_UNBOUND_AIR));
+
+        //FIREBALL STICK AIR
+        ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.TOOLS_AND_UTILITIES)
+                .register(entries -> entries.accept(ModItems.FIREBALL_STICK_AIR));
+        ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.COMBAT)
+                .register(entries -> entries.accept(ModItems.FIREBALL_STICK_AIR));
+
+//BLOCK
+
+        //FIREBALL STICK BLOCK
+        ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.TOOLS_AND_UTILITIES)
+                .register(entries -> entries.accept(ModItems.FIREBALL_STICK_BLOCK));
+        ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.COMBAT)
+                .register(entries -> entries.accept(ModItems.FIREBALL_STICK_BLOCK));
+
+        //TNT STICK UNBOUND BLOCK
+        ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.TOOLS_AND_UTILITIES)
+                .register(entries -> entries.accept(ModItems.TNT_STICK_BLOCK));
+        ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.COMBAT)
+                .register(entries -> entries.accept(ModItems.TNT_STICK_BLOCK));
+
+        //FIREBALL STICK BLOCK
+        ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.TOOLS_AND_UTILITIES)
+                .register(entries -> entries.accept(ModItems.TNT_STICK_UNBOUND_BLOCK));
+        ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.COMBAT)
+                .register(entries -> entries.accept(ModItems.TNT_STICK_UNBOUND_BLOCK));
 
         //Makes the tick-based placement of TNT work properly
         ServerTickEvents.END_SERVER_TICK.register(server -> tick());

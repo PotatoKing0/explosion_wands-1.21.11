@@ -1,16 +1,11 @@
-package com.fireball_stick.fireball_stick;
+package com.fireball_stick.sticks_click_block;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.item.PrimedTnt;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.projectile.hurtingprojectile.Fireball;
 import net.minecraft.world.entity.projectile.hurtingprojectile.LargeFireball;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.item.context.UseOnContext;
@@ -55,7 +50,7 @@ public class FireballStickClickBlock {
         double amplitude = 15;
         int fireballAmount = 50;
         int explosionPower = 15;
-        //Direction the fireballs will head towards
+        //Direction the fireballs will head towards, and the speed of the fireballs
         double xDir = 0;
         double yDir = -2;
         double zDir = 0;
@@ -90,6 +85,7 @@ public class FireballStickClickBlock {
                 angle += angleStep;
                 yDir = yDir;
             }
+            level.playSound(null, clickedPos.getX(), clickedPos.getY(), clickedPos.getZ(), SoundEvents.FIRECHARGE_USE, SoundSource.PLAYERS, 0.6F, 1.0F);
             return InteractionResult.SUCCESS;
         }
         return InteractionResult.FAIL;

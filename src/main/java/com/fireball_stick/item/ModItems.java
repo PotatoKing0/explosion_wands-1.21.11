@@ -1,50 +1,90 @@
 package com.fireball_stick.item;
 
-import com.fireball_stick.fireball_stick.FireballStickItem;
+import com.fireball_stick.item_classes.air.FireballStickAirItem;
 import com.fireball_stick.initialization.ModInitialization;
-import com.fireball_stick.tnt_stick_unbound.TNTStickUnboundItem;
-import com.fireball_stick.tnt_stick.TNTStickItem;
+import com.fireball_stick.item_classes.air.TNTStickUnboundAirItem;
+import com.fireball_stick.item_classes.block.FireballStickBlockItem;
+import com.fireball_stick.item_classes.block.TNTStickBlockItem;
+import com.fireball_stick.item_classes.block.TNTStickUnboundBlockItem;
+import com.fireball_stick.item_classes.air.TNTStickAirItem;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.server.packs.resources.Resource;
 import net.minecraft.world.item.Item;
 
 public class ModItems {
-//TNT STICK
+//AIR
 
-    public static final ResourceKey<Item> TNT_STICK_KEY =
-            key("tnt_stick");
+    //TNT STICK AIR
+    public static final ResourceKey<Item> TNT_STICK_AIR_KEY =
+            key("tnt_stick_air");
 
-    public static final Item TNT_STICK =
-            register(TNT_STICK_KEY,
-                    new TNTStickItem(
+    public static final Item TNT_STICK_AIR =
+            register(TNT_STICK_AIR_KEY,
+                    new TNTStickAirItem(
                             new Item.Properties()
                                     .stacksTo(1)
-                                    .setId(TNT_STICK_KEY)));
-    //TNT STICK UNBOUND
-    public static final ResourceKey<Item> TNT_STICK_UNBOUND_KEY =
-            key("tnt_stick_unbound");
+                                    .setId(TNT_STICK_AIR_KEY)));
 
-    public static final Item TNT_STICK_UNBOUND =
-            register(TNT_STICK_UNBOUND_KEY,
-                    new TNTStickUnboundItem(
+    //TNT STICK UNBOUND AIR
+    public static final ResourceKey<Item> TNT_STICK_UNBOUND_AIR_KEY =
+            key("tnt_stick_unbound_air");
+
+    public static final Item TNT_STICK_UNBOUND_AIR =
+            register(TNT_STICK_UNBOUND_AIR_KEY,
+                    new TNTStickUnboundAirItem(
                             new Item.Properties()
                                     .stacksTo(1)
-                                    .setId(TNT_STICK_UNBOUND_KEY)));
+                                    .setId(TNT_STICK_UNBOUND_AIR_KEY)));
 
-    //FIREBALL STICK
-    public static final ResourceKey<Item> FIREBALL_STICK_KEY =
-            key("fireball_stick");
+    //FIREBALL STICK AIR
+    public static final ResourceKey<Item> FIREBALL_STICK_AIR_KEY =
+            key("fireball_stick_air");
 
-    public static final Item FIREBALL_STICK =
-            register(FIREBALL_STICK_KEY,
-                new FireballStickItem(
-                        new Item.Properties()
-                            .stacksTo(1)
-                            .setId(FIREBALL_STICK_KEY)));
+    public static final Item FIREBALL_STICK_AIR =
+            register(FIREBALL_STICK_AIR_KEY,
+                    new FireballStickAirItem(
+                            new Item.Properties()
+                                    .stacksTo(1)
+                                    .setId(FIREBALL_STICK_AIR_KEY)));
+
+//BLOCK
+
+    //FIREBALL STICK BLOCK
+    public static final ResourceKey<Item> FIREBALL_STICK_BLOCK_KEY =
+            key("fireball_stick_block");
+
+    public static final Item FIREBALL_STICK_BLOCK =
+            register(FIREBALL_STICK_BLOCK_KEY,
+                    new FireballStickBlockItem(
+                            new Item.Properties()
+                                    .stacksTo(1)
+                                    .setId(FIREBALL_STICK_BLOCK_KEY)));
+
+
+    //TNT STICK BLOCK
+    public static final ResourceKey<Item> TNT_STICK_BLOCK_KEY =
+            key("tnt_stick_block");
+
+    public static final Item TNT_STICK_BLOCK =
+            register(TNT_STICK_BLOCK_KEY,
+                    new TNTStickBlockItem(
+                            new Item.Properties()
+                                    .stacksTo(1)
+                                    .setId(TNT_STICK_BLOCK_KEY)));
+
+    //TNT STICK UNBOUND BLOCK
+    public static final ResourceKey<Item> TNT_STICK_UNBOUND_BLOCK_KEY =
+            key("tnt_stick_unbound_block");
+
+    public static final Item TNT_STICK_UNBOUND_BLOCK =
+            register(TNT_STICK_UNBOUND_BLOCK_KEY,
+                    new TNTStickUnboundBlockItem(
+                            new Item.Properties()
+                                    .stacksTo(1)
+                                    .setId(TNT_STICK_UNBOUND_BLOCK_KEY)));
 
 //HELPER METHODS
     //Creating the item's identity
