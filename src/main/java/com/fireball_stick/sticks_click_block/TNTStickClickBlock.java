@@ -9,6 +9,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.LivingEntity;
@@ -17,7 +18,10 @@ import net.minecraft.world.item.*;
 import net.minecraft.world.item.component.Consumable;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.item.context.UseOnContext;
+import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.Vec3;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
@@ -25,6 +29,7 @@ import java.util.List;
 import java.util.Queue;
 
 public class TNTStickClickBlock {
+	private static int tntAmount = 100;
 	private static final List<Runnable> QUEUE = new ArrayList<>();
 	private static int tickCounter = 0;
 	private static int taskCount = 0;
@@ -32,7 +37,6 @@ public class TNTStickClickBlock {
 	public static void add(Runnable task) {
 		QUEUE.add(task);
 	}
-
 	//Tick queue system
 	public static void tick() {
 		if (QUEUE.isEmpty()) {
@@ -47,20 +51,25 @@ public class TNTStickClickBlock {
 	}
 
 	//Hits a block
-	public static InteractionResult useOn(UseOnContext context)  {
+	public static InteractionResult use(Item item, Level level, Player player, InteractionHand hand)  {
+		/*
 		BlockPlaceContext placeContext = new BlockPlaceContext(context);
 		BlockPos clickedPos = placeContext.getClickedPos();
 		Level level = context.getLevel();
 		Player player = context.getPlayer();
+		 */
 
 		if (level instanceof ServerLevel serverLevel && player != null && !level.isClientSide()) {
+			int reach = 1000;
 			float explosionPower = 4.0F;
 			double gravity = 0.04F;
 			boolean explodeOnContact = false;
+			int spawnHeight = 20;
+			/*
 			double xDir = clickedPos.getX();
 			double yDir = clickedPos.getY();
 			double zDir = clickedPos.getZ();
-			int tntAmount = 100;
+			 */
 			double min = 1.0;
 			double max = 4.0;
 			RandomSource random = RandomSource.create();
@@ -72,6 +81,18 @@ public class TNTStickClickBlock {
 			double amplitude = 15; //Width of the curve
 			//Making sure the primed TNTs explode when all the primed TNTs in the current loop has spawned
 			int tntFuseTimer = (tntAmount * 50) / 50 ; //50 ms = 1 tick
+			Vec3 playerEyeStart = player.getEyePosition();
+			Vec3 playerLookAngle = player.getLookAngle();
+			Vec3 playerEyeEnd = playerEyeStart.add(playerLookAngle.scale(reach));
+			BlockHitResult blockHitResult = level.clip(new ClipContext(
+					playerEyeStart,
+					playerEyeEnd,
+					ClipContext.Block.COLLIDER,
+					ClipContext.Fluid.NONE,
+					player
+			));
+			BlockPos target = blockHitResult.getBlockPos();
+
 			final double[] changePosition = {0}; //Initial position of the starting TNT
 				for (int i = 0; i < tntAmount; i++) {
 						//Fires a TNT at the interval specified in tick()
@@ -81,9 +102,9 @@ public class TNTStickClickBlock {
 						//Creates primed TNTs every iteration
 						CustomTnt customTnt = ModEntities.CUSTOM_TNT.create(level, EntitySpawnReason.TRIGGERED);
 						//X dir: cos, Z dir: sin, makes a circle
-						customTnt.setPos(xDir + (Math.cos(angle[0]) * amplitude),
-								yDir + 3 + Math.cos(changePosition[0]) * 5,
-								zDir + (Math.sin(angle[0]) * amplitude));
+						customTnt.setPos(target.getX() + (Math.cos(angle[0]) * amplitude),
+								target.getY() + spawnHeight + Math.cos(changePosition[0]) * amplitude / 3,
+								target.getZ() + (Math.sin(angle[0]) * amplitude));
 						customTnt.setFuse(tntFuseTimer);
 						//Adds the primed TNT to the world
 						serverLevel.addFreshEntity(customTnt);
@@ -102,7 +123,14 @@ public class TNTStickClickBlock {
 					});
                 }
 			//Plays a sound when a block is clicked
-			level.playSound(null, clickedPos.getX(), clickedPos.getY(), clickedPos.getZ(), SoundEvents.TNT_PRIMED, SoundSource.PLAYERS, 0.1F, 1.0F);
+			level.playSound(null,
+					blockHitResult.getBlockPos().getX(),
+					//Makes the sound play as close to the y direction the player is at
+					blockHitResult.getBlockPos().getY() + spawnHeight,
+					blockHitResult.getBlockPos().getZ(),
+					SoundEvents.TNT_PRIMED,
+					SoundSource.PLAYERS,
+					0.6F, 1.0F);
 			return InteractionResult.SUCCESS;
 		} else {
 			return InteractionResult.CONSUME;

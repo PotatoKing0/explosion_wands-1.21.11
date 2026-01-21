@@ -1,12 +1,10 @@
 package com.fireball_stick.item;
 
-import com.fireball_stick.item_classes.air.FireballStickAirItem;
+import com.fireball_stick.item_classes.air.*;
 import com.fireball_stick.initialization.ModInitialization;
-import com.fireball_stick.item_classes.air.TNTStickUnboundAirItem;
 import com.fireball_stick.item_classes.block.FireballStickBlockItem;
 import com.fireball_stick.item_classes.block.TNTStickBlockItem;
 import com.fireball_stick.item_classes.block.TNTStickUnboundBlockItem;
-import com.fireball_stick.item_classes.air.TNTStickAirItem;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
@@ -50,6 +48,27 @@ public class ModItems {
                                     .stacksTo(1)
                                     .setId(FIREBALL_STICK_AIR_KEY)));
 
+    //FIREBALL STICK SHOTGUN AIR
+    public static final ResourceKey<Item> FIREBALL_STICK_SHOTGUN_AIR_KEY =
+            key("fireball_stick_shotgun_air");
+
+    public static final Item FIREBALL_STICK_SHOTGUN_AIR =
+            register(FIREBALL_STICK_SHOTGUN_AIR_KEY,
+                    new FireballStickShotgunAirItem(
+                            new Item.Properties()
+                                    .stacksTo(1)
+                                    .setId(FIREBALL_STICK_SHOTGUN_AIR_KEY)));
+
+    //FIREBALL STICK HITSCAN AIR
+    public static final ResourceKey<Item> FIREBALL_STICK_HITSCAN_AIR_KEY =
+            key("fireball_stick_hitscan_air");
+
+    public static final Item FIREBALL_STICK_HITSCAN_AIR =
+            register(FIREBALL_STICK_HITSCAN_AIR_KEY,
+                    new FireballStickHitscanAirItem(
+                            new Item.Properties()
+                                    .stacksTo(1)
+                                    .setId(FIREBALL_STICK_HITSCAN_AIR_KEY)));
 //BLOCK
 
     //FIREBALL STICK BLOCK

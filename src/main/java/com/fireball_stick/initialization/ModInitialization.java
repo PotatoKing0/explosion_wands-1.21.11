@@ -31,12 +31,24 @@ public class ModInitialization implements ModInitializer {
         ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.COMBAT)
                 .register(entries -> entries.accept(ModItems.TNT_STICK_UNBOUND_AIR));
 
+        //TNT STICK SHOTGUN AIR
+        ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.TOOLS_AND_UTILITIES)
+                .register(entries -> entries.accept(ModItems.FIREBALL_STICK_SHOTGUN_AIR));
+        ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.COMBAT)
+                .register(entries -> entries.accept(ModItems.FIREBALL_STICK_SHOTGUN_AIR));
+
         //FIREBALL STICK AIR
         ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.TOOLS_AND_UTILITIES)
                 .register(entries -> entries.accept(ModItems.FIREBALL_STICK_AIR));
         ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.COMBAT)
                 .register(entries -> entries.accept(ModItems.FIREBALL_STICK_AIR));
 
+        //FIREBALL STICK HITSCAN AIR
+
+        ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.TOOLS_AND_UTILITIES)
+                .register(entries -> entries.accept(ModItems.FIREBALL_STICK_HITSCAN_AIR));
+        ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.COMBAT)
+                .register(entries -> entries.accept(ModItems.FIREBALL_STICK_HITSCAN_AIR));
 //BLOCK
 
         //FIREBALL STICK BLOCK

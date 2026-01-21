@@ -42,21 +42,25 @@ public class TNTStickUnboundClickAir extends Item {
         Vec3 playerLookDir = player.getLookAngle();
         playerLookDir.add(dirX, dirY, dirZ).normalize();
         CustomTnt customTnt = ModEntities.CUSTOM_TNT.create(level, EntitySpawnReason.TRIGGERED);
-
-        if(blockHitResult.getType() != HitResult.Type.BLOCK && customTnt != null) {
-            Vec3 customTntInAirPosition = player.position().add(0, player.getEyeHeight() - 0.25, 0)
-                    .add(playerLookDir.scale(3.0));
-            customTnt.moveOrInterpolateTo(customTntInAirPosition);
-            customTnt.setDeltaMovement(playerLookDir.scale(velocity));
-            level.playSound(null, player.getX(), player.getY(), player.getZ(),
-                    SoundEvents.TNT_PRIMED, SoundSource.PLAYERS, 0.6F, 1.0F);
-            customTnt.setAfterSpawnEffects(true);
-            customTnt.setDiscardOnFirstUse(false);
-            customTnt.setExplodeOnContact(true);
-            customTnt.setExplosionPower(5F);
-            customTnt.setFuse(100);
-            return customTnt;
-    }
+        if(customTnt != null) {
+            if (blockHitResult.getType() == HitResult.Type.BLOCK) {
+                Vec3 customTntInAirPosition = player.position().add(0, player.getEyeHeight() - 0.25, 0)
+                        .add(playerLookDir.scale(3.0));
+                customTnt.moveOrInterpolateTo(customTntInAirPosition);
+                } else {
+                //Works for the most part
+                Vec3 customTntInAirPosition = blockHitResult.getLocation();
+                customTnt.moveOrInterpolateTo(customTntInAirPosition);
+                }
+                customTnt.setDeltaMovement(playerLookDir.scale(velocity));
+                level.playSound(null, player.getX(), player.getY(), player.getZ(),
+                        SoundEvents.TNT_PRIMED, SoundSource.PLAYERS, 0.6F, 1.0F);
+                customTnt.setDiscardOnFirstUse(false);
+                customTnt.setExplodeOnContact(true);
+                customTnt.setExplosionPower(4.0F);
+                customTnt.setFuse(100);
+                return customTnt;
+            }
         return null;
 }
 }

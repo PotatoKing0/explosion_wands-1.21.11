@@ -35,7 +35,6 @@ public class TNTStickClickAir extends Item {
 
     public static PrimedTnt asPrimedTnt(Item item, Level level, Player player, InteractionHand hand) {
         int velocity = 4;
-        int amount = 5;
         BlockHitResult blockHitResult = getPlayerPOVHitResult(level, player, ClipContext.Fluid.NONE);
         double dirX = player.getX();
         double dirY = player.getY();
@@ -46,27 +45,31 @@ public class TNTStickClickAir extends Item {
         Vec3 playerEndDir = playerStartDir.add(playerLookDir.scale(1));
         playerLookDir.add(dirX, dirY, dirZ).normalize();
         CustomTnt customTnt = ModEntities.CUSTOM_TNT.create(level, EntitySpawnReason.TRIGGERED);
-
-        if(blockHitResult.getType() != HitResult.Type.BLOCK && customTnt != null) {
-            Vec3 customTntInAirPosition = player.position().add(0, player.getEyeHeight() - 0.25, 0)
-                    .add(playerLookDir.scale(3.0));
-            customTnt.moveOrInterpolateTo(customTntInAirPosition);
-            customTnt.setDeltaMovement(playerLookDir.scale(velocity));
-            level.playSound(null, player.getX(), player.getY(), player.getZ(),
-                    SoundEvents.TNT_PRIMED, SoundSource.PLAYERS, 0.6F, 1.0F);
-            customTnt.setAfterSpawnEffects(false);
-            customTnt.setDiscardOnFirstUse(true);
-            customTnt.setExplodeOnContact(true);
-            customTnt.setExplosionPower(4.0F);
-            customTnt.setEntitySpawnAfterExplosion(true);
-            customTnt.setCircle(true);
-            customTnt.setAmplitude(2);
-            customTnt.setXChange(2);
-            customTnt.setYChange(2);
-            customTnt.setZChange(2);
-            customTnt.setEntityToSpawn(EntityType.CHICKEN);
-            customTnt.setEntityAmount(50);
-            return customTnt;
+        if(customTnt != null) {
+            if(blockHitResult.getType() != HitResult.Type.BLOCK) {
+                Vec3 customTntInAirPosition = player.position().add(0, player.getEyeHeight() - 0.25, 0)
+                        .add(playerLookDir.scale(3.0));
+                customTnt.moveOrInterpolateTo(customTntInAirPosition);
+            } else {
+                //Does not work if it's at the very corner of a block, but it's more than good enough
+                Vec3 customTntInAirPosition = blockHitResult.getLocation();
+                customTnt.moveOrInterpolateTo(customTntInAirPosition);
+            }
+                customTnt.setDeltaMovement(playerLookDir.scale(velocity));
+                level.playSound(null, player.getX(), player.getY(), player.getZ(),
+                        SoundEvents.TNT_PRIMED, SoundSource.PLAYERS, 0.2F, 1.0F);
+                customTnt.setDiscardOnFirstUse(true);
+                customTnt.setExplodeOnContact(true);
+                customTnt.setExplosionPower(0.0F);
+                customTnt.setEntitySpawnAfterExplosion(true);
+                customTnt.setCircle(true);
+                customTnt.setAmplitude(10);
+                customTnt.setXChange(2);
+                customTnt.setYChange(2);
+                customTnt.setZChange(2);
+                customTnt.setEntityToSpawn(EntityType.CHICKEN);
+                customTnt.setEntityAmount(60);
+                return customTnt;
             }
             return null;
     }

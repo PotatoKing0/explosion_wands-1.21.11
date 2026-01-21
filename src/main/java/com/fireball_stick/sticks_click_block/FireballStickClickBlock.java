@@ -1,15 +1,23 @@
 package com.fireball_stick.sticks_click_block;
 
+import com.ibm.icu.number.Scale;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.hurtingprojectile.LargeFireball;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.item.context.UseOnContext;
+import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 
 import java.util.ArrayDeque;
@@ -41,11 +49,14 @@ public class FireballStickClickBlock {
     }
 
     //Hits a block
-    public static InteractionResult useOn(UseOnContext context) {
+    public static InteractionResult use(Item item, Level level, Player player, InteractionHand hand) {
+        /*
         BlockPlaceContext placeContext = new BlockPlaceContext(context);
         BlockPos clickedPos = placeContext.getClickedPos();
         Level level = context.getLevel();
         Player player = context.getPlayer();
+         */
+        int reach = 1000;
         int spawnHeight = 50;
         double amplitude = 15;
         int fireballAmount = 50;
@@ -56,19 +67,34 @@ public class FireballStickClickBlock {
         double zDir = 0;
 
         if(player != null && level instanceof ServerLevel serverLevel) {
+            Vec3 dir = new Vec3(xDir, yDir, zDir);
             double angle = Math.toRadians(player.getYRot() + 90);
             //Makes the fireballs equally spread out
             double angleStep = Math.PI / ((double) fireballAmount / 2);
-            //How far away the fireballs spawn from the player
-            Vec3 playerLookDir = player.getLookAngle().normalize();
-            Vec3 playerEye = player.getEyePosition().add(playerLookDir.scale(10));
+            Direction playerLookDir = player.getDirection();
+            Vec3 playerEyeStart = player.getEyePosition();
+            //Also how far away the fireballs spawn from the player
+            Vec3 playerLookAngle = player.getLookAngle();
+            Vec3 playerEyeEnd = playerEyeStart.add(playerLookAngle.scale(reach));
+
+
             //Position the fireballs will face
-            double xPos = playerEye.x;
+            /*
+            double xPos = playerEyeStart.x;
             //To make the y-position consistent
             double yPos = clickedPos.getY();
-            double zPos = playerEye.z;
+            double zPos = playerEyeStart.z;
+             */
+            BlockHitResult blockHitResult = level.clip(new ClipContext(
+                    playerEyeStart,
+                    playerEyeEnd,
+                    ClipContext.Block.COLLIDER,
+                    ClipContext.Fluid.NONE,
+                    player
+            ));
+            BlockPos target = blockHitResult.getBlockPos();
+
             for (int i = 0; i < fireballAmount; i++) {
-                Vec3 dir = new Vec3(xDir, yDir, zDir);
                 LargeFireball largeFireball = new LargeFireball(
                         level,
                         player,
@@ -76,16 +102,23 @@ public class FireballStickClickBlock {
                         explosionPower);
 
                 largeFireball.setPos(
-                        xPos + (Math.cos(angle) * amplitude),
-                        yPos + spawnHeight,
-                        zPos + (Math.sin(angle) * amplitude));
+                        target.getX() + (Math.cos(angle) * amplitude),
+                        target.getY() + spawnHeight,
+                        target.getZ() + (Math.sin(angle) * amplitude));
 
                 largeFireball.setDeltaMovement(xDir, yDir, zDir);
                 serverLevel.addFreshEntity(largeFireball);
                 angle += angleStep;
                 yDir = yDir;
             }
-            level.playSound(null, clickedPos.getX(), clickedPos.getY(), clickedPos.getZ(), SoundEvents.FIRECHARGE_USE, SoundSource.PLAYERS, 0.6F, 1.0F);
+            serverLevel.playSound(null, blockHitResult.getBlockPos().getX(),
+                    //Makes the sound play as close to the y direction the player is at
+                    blockHitResult.getBlockPos().getY() + spawnHeight,
+                    blockHitResult.getBlockPos().getZ(),
+                    SoundEvents.FIRECHARGE_USE,
+                    SoundSource.PLAYERS,
+                    0.6F,
+                    1.0F);
             return InteractionResult.SUCCESS;
         }
         return InteractionResult.FAIL;

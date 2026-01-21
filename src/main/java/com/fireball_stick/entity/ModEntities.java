@@ -1,5 +1,6 @@
 package com.fireball_stick.entity;
 
+import com.fireball_stick.customFunctions.fireball.CustomFireball;
 import com.fireball_stick.customFunctions.tnt.CustomTnt;
 import com.fireball_stick.initialization.ModInitialization;
 import net.minecraft.core.Registry;
@@ -21,6 +22,19 @@ public class ModEntities {
                                     .of(CustomTnt::new, MobCategory.MISC)
                                     .sized(0.98F, 0.98F)
                                     .build(CUSTOM_TNT_KEY));
+
+    //CUSTOM FIREBALL
+    public static final ResourceKey<EntityType<?>> CUSTOM_FIREBALL_KEY =
+            key("custom_fireball");
+
+    public static final EntityType<CustomFireball> CUSTOM_FIREBALL =
+            register(CUSTOM_FIREBALL_KEY,
+                    EntityType
+                            .Builder
+                            .of(CustomFireball::new, MobCategory.MISC)
+                            .sized(0.98F, 0.98F)
+                            .build(CUSTOM_FIREBALL_KEY));
+
     //HELPER METHODS
     private static ResourceKey<EntityType<?>> key(String name) {
         return ResourceKey.create(
