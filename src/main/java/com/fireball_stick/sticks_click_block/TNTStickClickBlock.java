@@ -142,7 +142,7 @@ public class TNTStickClickBlock {
 										blockHitResult.getBlockPos().getZ(),
 										SoundEvents.TNT_PRIMED,
 										SoundSource.PLAYERS,
-										0.6F, 1.0F);
+										0.4F, 1.0F);
 							}
 						}
 					});

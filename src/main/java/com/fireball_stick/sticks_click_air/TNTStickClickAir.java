@@ -4,6 +4,7 @@ import com.fireball_stick.customFunctions.tnt.CustomTnt;
 import com.fireball_stick.entity.ModEntities;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.EntitySpawnReason;
@@ -57,7 +58,7 @@ public class TNTStickClickAir extends Item {
             }
                 customTnt.setDeltaMovement(playerLookDir.scale(velocity));
                 level.playSound(null, player.getX(), player.getY(), player.getZ(),
-                        SoundEvents.TNT_PRIMED, SoundSource.PLAYERS, 0.2F, 1.0F);
+                        SoundEvents.TNT_PRIMED, SoundSource.PLAYERS, 0.4F, 1.0F);
                 customTnt.setDiscardOnFirstUse(true);
                 customTnt.setExplodeOnContact(true);
                 customTnt.setExplosionPower(0.0F);
@@ -67,6 +68,7 @@ public class TNTStickClickAir extends Item {
                 customTnt.setYChange(10);
                 customTnt.setEntityToSpawn(EntityType.CHICKEN);
                 customTnt.setEntityAmount(60);
+                customTnt.setGradualEntitySpawnAfterExplosion(false);
                 return customTnt;
             }
             return null;

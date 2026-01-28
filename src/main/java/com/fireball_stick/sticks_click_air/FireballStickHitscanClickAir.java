@@ -122,12 +122,11 @@ public class FireballStickHitscanClickAir extends Item {
                         //This also causes the player to not get the return to sender achievement as a side effect
                         fireballAir.discard();
                         //Sound effect when clicking on entity
-                            level.playSound(null, dirX, dirY, dirZ, SoundEvents.PLAYER_LEVELUP, SoundSource.NEUTRAL, 0.1F, 1.0F);
+                            level.playSound(null, dirX, dirY, dirZ, SoundEvents.PLAYER_LEVELUP, SoundSource.NEUTRAL, 0.2F, 1.0F);
                         return fireballAir;
                     }
                 }
+        level.playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.VILLAGER_NO, SoundSource.NEUTRAL, 0.4F, 1.0F);
         return null;
     }
 }
-//Maybe include a check if a block is obstructing the player's view, since we can hit entities through walls currently
-//Make it so that, when an entity dies, we can no longer click on it

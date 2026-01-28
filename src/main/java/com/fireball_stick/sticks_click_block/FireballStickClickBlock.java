@@ -117,7 +117,7 @@ public class FireballStickClickBlock {
                     blockHitResult.getBlockPos().getZ(),
                     SoundEvents.FIRECHARGE_USE,
                     SoundSource.PLAYERS,
-                    0.6F,
+                    0.4F,
                     1.0F);
             return InteractionResult.SUCCESS;
         }

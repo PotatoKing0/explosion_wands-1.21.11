@@ -2,6 +2,7 @@ package com.fireball_stick.initialization;
 
 import com.fireball_stick.entity.ModEntities;
 import com.fireball_stick.item.ModItems;
+import com.fireball_stick.item_classes.air.TNTStickMidAirItem;
 import com.fireball_stick.tick.TickQueueManager;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
@@ -36,6 +37,13 @@ public class ModInitialization implements ModInitializer {
         ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.COMBAT)
                 .register(entries -> entries.accept(ModItems.FIREBALL_STICK_SHOTGUN_AIR));
 
+        //TNT STICK MID AIR
+
+        ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.TOOLS_AND_UTILITIES)
+                .register(entries -> entries.accept(ModItems.TNT_STICK_MID_AIR));
+        ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.COMBAT)
+                .register(entries -> entries.accept(ModItems.TNT_STICK_MID_AIR));
+
         //FIREBALL STICK AIR
         ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.TOOLS_AND_UTILITIES)
                 .register(entries -> entries.accept(ModItems.FIREBALL_STICK_AIR));
@@ -48,6 +56,7 @@ public class ModInitialization implements ModInitializer {
                 .register(entries -> entries.accept(ModItems.FIREBALL_STICK_HITSCAN_AIR));
         ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.COMBAT)
                 .register(entries -> entries.accept(ModItems.FIREBALL_STICK_HITSCAN_AIR));
+
 //BLOCK
 
         //FIREBALL STICK BLOCK

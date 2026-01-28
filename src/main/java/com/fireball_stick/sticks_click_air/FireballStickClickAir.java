@@ -1,27 +1,25 @@
 package com.fireball_stick.sticks_click_air;
 
-import com.fireball_stick.sticks_click_block.FireballStickClickBlock;
-import net.minecraft.core.particles.DustParticleOptions;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.npc.villager.Villager;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.entity.projectile.ProjectileUtil;
 import net.minecraft.world.entity.projectile.hurtingprojectile.LargeFireball;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.context.UseOnContext;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
+import org.jspecify.annotations.NonNull;
 
 public class FireballStickClickAir extends Item {
     public FireballStickClickAir(Properties properties) {
@@ -30,7 +28,6 @@ public class FireballStickClickAir extends Item {
 
     //Initializes the item
     public static InteractionResult use(Item item, Level level, Player player, InteractionHand hand) {
-        //ItemStack itemStack = player.getItemInHand(hand);
         BlockHitResult hitResult = getPlayerPOVHitResult(level, player, ClipContext.Fluid.NONE);
         if (hitResult.getType() != HitResult.Type.BLOCK && !level.isClientSide()) {
             return InteractionResult.SUCCESS;
@@ -95,5 +92,3 @@ public class FireballStickClickAir extends Item {
         return fireballAir;
     }
 }
-//TODO: Able to hit entities through blocks, maybe remove
-//Maybe make the hit on entities be another item instead (like a gun)

@@ -37,6 +37,17 @@ public class ModItems {
                                     .stacksTo(1)
                                     .setId(TNT_STICK_UNBOUND_AIR_KEY)));
 
+    //TNT STICK MID AIR
+    public static final ResourceKey<Item> TNT_STICK_MID_AIR_KEY =
+            key("tnt_stick_mid_air");
+
+    public static final Item TNT_STICK_MID_AIR =
+            register(TNT_STICK_MID_AIR_KEY,
+                    new TNTStickMidAirItem(
+                            new Item.Properties()
+                                    .stacksTo(1)
+                                    .setId(TNT_STICK_MID_AIR_KEY)));
+
     //FIREBALL STICK AIR
     public static final ResourceKey<Item> FIREBALL_STICK_AIR_KEY =
             key("fireball_stick_air");
