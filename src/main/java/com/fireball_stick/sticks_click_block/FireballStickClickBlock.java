@@ -107,6 +107,7 @@ public class FireballStickClickBlock {
                         target.getZ() + (Math.sin(angle) * amplitude));
 
                 largeFireball.setDeltaMovement(xDir, yDir, zDir);
+                largeFireball.addTag("fireball");
                 serverLevel.addFreshEntity(largeFireball);
                 angle += angleStep;
                 yDir = yDir;

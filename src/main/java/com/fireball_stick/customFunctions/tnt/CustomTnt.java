@@ -35,6 +35,7 @@ import org.slf4j.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class CustomTnt extends PrimedTnt {
     static int aliveTNTAmount = 0;
@@ -160,7 +161,6 @@ public class CustomTnt extends PrimedTnt {
             exploded = true;
         }
     }
-
     //What happens before the TNT explodes
     protected void onPreExplode() {
     }
@@ -219,6 +219,13 @@ public class CustomTnt extends PrimedTnt {
                             changeZ[0] += zChange;
                         }
                         server.addFreshEntity(entity);
+                        if(entityToSpawn != EntityType.TNT) {
+                            //Used in to apply the LivingEntityMixin logic to this entity only, instead of globally to all entities of this type
+                            entity.addTag("no_drops");
+                        } else {
+                            entity.addTag("customTnt");
+                        }
+
                         //Adds the spawned entities to a list so we are able to use them later outside the loop
                         spawnedEntities.add(entity);
                         entity.setNoGravity(!isTornado);

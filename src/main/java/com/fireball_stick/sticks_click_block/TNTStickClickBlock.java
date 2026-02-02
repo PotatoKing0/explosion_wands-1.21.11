@@ -133,6 +133,7 @@ public class TNTStickClickBlock {
 							spawnHeight[0] -= 0.25;
 							//Adds the primed TNT to the world
 							serverLevel.addFreshEntity(customTnt);
+							customTnt.addTag("customTnt");
 							//Kind of a hacky way to play a sound only at the very start of the loop
 							if(finalI1 == 0) {
 								level.playSound(null,

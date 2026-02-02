@@ -132,12 +132,16 @@ public class TNTStickFallingClickBlock {
                             serverLevel.addFreshEntity(customTnt);
                             customTnt.setFuse(fuse);
                             customTnt.setExplosionPower(randomIncrement);
+                            customTnt.addTag("customTnt");
                         }
-
-                        fallingBlockEntity.setPos(target.getX() + x,
-                                target.getY() + y + spawnHeight,
-                                target.getZ() + z
-                        );
+                        if(x != 0 && y != 0 && z != 0) {
+                            fallingBlockEntity.setPos(target.getX() + x,
+                                    target.getY() + y + spawnHeight,
+                                    target.getZ() + z
+                            );
+                        } else {
+                            fallingBlockEntity.discard();
+                        }
                         //serverLevel.addFreshEntity(fallingBlockEntity);
                         x = r * Math.sin(theta) * Math.cos(phi) + randomPos;
                         y = r * Math.cos(theta) + randomPos;
@@ -177,5 +181,4 @@ public class TNTStickFallingClickBlock {
         }
     }
 }
-//Maybe make it have different blocks in the same use
 //Maybe be able to freeze and unfreeze the falling blocks

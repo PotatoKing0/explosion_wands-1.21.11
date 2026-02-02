@@ -42,7 +42,7 @@ public class TNTFireballStickExplosionClickBlock {
             float randomExplosion = (minExplosion + random.nextFloat() * (maxExplosion - minExplosion));
             int randomIncrement = minIncrement + random.nextInt(maxIncrement - minIncrement);
             int randomEntity = minRandomEntities + random.nextInt(maxRandomEntities - minRandomEntities);
-            int fireballExplosionPower = 5;
+            int fireballExplosionPower = 8;
             int increment = ExplosionEntities.increment;
             double lessThanTheta = ExplosionEntities.lessThanTheta;
             double lessThanPhi = ExplosionEntities.lessThanPhi;
@@ -54,9 +54,9 @@ public class TNTFireballStickExplosionClickBlock {
             double y = ExplosionEntities.y;
             double z = ExplosionEntities.z;
             double r = ExplosionEntities.r;
-            r = 3;
+            r = 8;
             int spawnHeight = ExplosionEntities.spawnHeight;
-            spawnHeight = 25;
+            spawnHeight = 20;
             int reach = ExplosionEntities.reach;
             //int spawnedEntitiesComparisonAmount = ExplosionEntities.spawnedEntitiesComparisonAmount;
             //int spawnedEntitiesComparison = ExplosionEntities.spawnedEntitiesComparison;
@@ -80,7 +80,7 @@ public class TNTFireballStickExplosionClickBlock {
             //entityToSpawn = EntityType.FIREBALL;
             //Failsafe in-case we spawn more entities than is intended
             if(spawnedEntities <= maxEntities) {
-                for (double theta = ExplosionEntities.theta; theta <= lessThanTheta; theta += incrementTheta) {
+                for (double theta = ExplosionEntities.theta; theta <= lessThanTheta / 2; theta += incrementTheta) {
                     for (double phi = ExplosionEntities.phi; phi <= lessThanPhi; phi += incrementPhi) {
                         Entity entity = entityToSpawn.create(level, EntitySpawnReason.TRIGGERED);
                         LargeFireball fireball = new LargeFireball(level, player, playerLookAngle, fireballExplosionPower);
@@ -88,21 +88,29 @@ public class TNTFireballStickExplosionClickBlock {
                         //This does not make a perfect circle, but it should not be noticeable
                         if (increment <= 0 && customTnt != null) {
                             customTnt.setPos(target.getX(),
-                                    target.getY() + spawnHeight + 6,
+                                    target.getY() + spawnHeight - 3,
                                     target.getZ()
                             );
                             serverLevel.addFreshEntity(customTnt);
                             customTnt.setFuse(fuse);
                             customTnt.setExplosionPower(0F);
+
                             System.out.println("TNTs spawned: " + (increment + 1));
                         }
                         //Creates primed TNTs every iteration
                         //CustomTnt customTnt = ModEntities.CUSTOM_TNT.create(level, EntitySpawnReason.TRIGGERED);
                         //X dir: cos, Z dir: sin, makes a circle
-                        fireball.setPos(target.getX() + x,
-                                target.getY() + y + spawnHeight,
-                                target.getZ() + z
-                        );
+                        if(x != 0 && y != 0 && z != 0) {
+                            fireball.setPos(target.getX() + x,
+                                    target.getY() - y + spawnHeight,
+                                    target.getZ() - z
+
+                            );
+                            fireball.addTag("fireball");
+                            serverLevel.addFreshEntity(fireball);
+                        } else {
+                            fireball.discard();
+                        }
                     /*
                     customTnt.setFuse(40);
                     customTnt.setExplosionPower(0F);
@@ -110,11 +118,8 @@ public class TNTFireballStickExplosionClickBlock {
                     customTnt.setDefaultGravity(-0.04);
 
                      */
-                        //Adds the primed TNT to the world
-                        serverLevel.addFreshEntity(fireball);
                         //Changes the initial angle by the value of angleStep every iteration so the TNTs are not static
                         //Height of the cos curve every iteration
-                        //changePosition[0] += Math.PI / ((double) (tntAmount / 4) / 2);
                         x = r * Math.sin(theta) * Math.cos(phi) + randomPos;
                         y = r * Math.cos(theta) + randomPos;
                         z = r * Math.sin(theta) * Math.sin(phi) + randomPos;
@@ -151,6 +156,3 @@ public class TNTFireballStickExplosionClickBlock {
         }
     }
 }
-//Maybe split them into TNT and fireball
-//Customize the fireballs with the same technique as for the other fireball classes
-//Maybe make it a half-circle instead

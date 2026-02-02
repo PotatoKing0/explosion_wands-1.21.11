@@ -23,7 +23,7 @@ import net.minecraft.world.phys.Vec3;
 public class TNTStickEntitiesClickBlock {
 
     //Hits a block
-    public static InteractionResult use(Item item, Level level, Player player, InteractionHand hand)  {
+    public static InteractionResult use(Item item, Level level, Player player, InteractionHand hand) {
 
         if (level instanceof ServerLevel serverLevel && player != null && !level.isClientSide()) {
             int maxEntities = ExplosionEntities.maxEntities;
@@ -67,38 +67,38 @@ public class TNTStickEntitiesClickBlock {
             String entityType = "";
             BlockPos target = blockHitResult.getBlockPos();
             //Failsafe in-case we spawn more entities than is intended
-            if(spawnedEntities <= maxEntities) {
+            if (spawnedEntities <= maxEntities) {
                 for (double theta = ExplosionEntities.theta; theta <= lessThanTheta; theta += incrementTheta) {
                     for (double phi = ExplosionEntities.phi; phi <= lessThanPhi; phi += incrementPhi) {
-                        if(randomEntity <= spawnedEntities / 8 && spawnedEntities >= 0) {
+                        if (randomEntity <= spawnedEntities / 8 && spawnedEntities >= 0) {
                             entityToSpawn = EntityType.CHICKEN;
                             entityType = entityToSpawn.toString();
                         }
-                        if(randomEntity <= (spawnedEntities / 4) && randomEntity > (spawnedEntities / 8)) {
+                        if (randomEntity <= (spawnedEntities / 4) && randomEntity > (spawnedEntities / 8)) {
                             entityToSpawn = EntityType.BREEZE;
                             entityType = entityToSpawn.toString();
                         }
-                        if(randomEntity <= (spawnedEntities / 8) * 2 + (spawnedEntities / 8) && randomEntity > (spawnedEntities / 4)) {
+                        if (randomEntity <= (spawnedEntities / 8) * 2 + (spawnedEntities / 8) && randomEntity > (spawnedEntities / 4)) {
                             entityToSpawn = EntityType.COW;
                             entityType = entityToSpawn.toString();
                         }
-                        if(randomEntity <= spawnedEntities / 2 && randomEntity > (spawnedEntities / 8) * 2 + (spawnedEntities / 8)) {
+                        if (randomEntity <= spawnedEntities / 2 && randomEntity > (spawnedEntities / 8) * 2 + (spawnedEntities / 8)) {
                             entityToSpawn = EntityType.BAT;
                             entityType = entityToSpawn.toString();
                         }
-                        if(randomEntity <= (spawnedEntities / 2) + (spawnedEntities / 8) && randomEntity > (spawnedEntities / 2)) {
+                        if (randomEntity <= (spawnedEntities / 2) + (spawnedEntities / 8) && randomEntity > (spawnedEntities / 2)) {
                             entityToSpawn = EntityType.ARMADILLO;
                             entityType = entityToSpawn.toString();
                         }
-                        if(randomEntity <= (spawnedEntities / 2) + (spawnedEntities / 4) && randomEntity > (spawnedEntities / 2) + (spawnedEntities / 8)) {
+                        if (randomEntity <= (spawnedEntities / 2) + (spawnedEntities / 4) && randomEntity > (spawnedEntities / 2) + (spawnedEntities / 8)) {
                             entityToSpawn = EntityType.GOAT;
                             entityType = entityToSpawn.toString();
                         }
-                        if(randomEntity <= spawnedEntities - (spawnedEntities / 8) && randomEntity > (spawnedEntities / 2) + (spawnedEntities / 4)) {
+                        if (randomEntity <= spawnedEntities - (spawnedEntities / 8) && randomEntity > (spawnedEntities / 2) + (spawnedEntities / 4)) {
                             entityToSpawn = EntityType.PIG;
                             entityType = entityToSpawn.toString();
                         }
-                        if(randomEntity <= spawnedEntities && randomEntity > spawnedEntities - (spawnedEntities / 8)) {
+                        if (randomEntity <= spawnedEntities && randomEntity > spawnedEntities - (spawnedEntities / 8)) {
                             entityToSpawn = EntityType.SNOW_GOLEM;
                             entityType = entityToSpawn.toString();
                         }
@@ -110,38 +110,42 @@ public class TNTStickEntitiesClickBlock {
                                     target.getY() + spawnHeight,
                                     target.getZ()
                             );
-                        }
                             serverLevel.addFreshEntity(customTnt);
                             customTnt.setFuse(fuse);
                             customTnt.setExplosionPower(randomIncrement);
-                        if(entity != null) {
-                            entity.setPos(target.getX() + x,
-                                    target.getY() + y + spawnHeight,
-                                    target.getZ() + z
-                            );
+                            customTnt.addTag("customTnt");
                         }
-                        serverLevel.addFreshEntity(entity);
-                        x = r * Math.sin(theta) * Math.cos(phi) + randomPos;
-                        y = r * Math.cos(theta) + randomPos;
-                        z = r * Math.sin(theta) * Math.sin(phi) + randomPos;
-                        increment++;
+                        if (entity != null) {
+                            if (x != 0 && y != 0 && z != 0) {
+                                entity.setPos(target.getX() + x,
+                                        target.getY() + y + spawnHeight,
+                                        target.getZ() + z
+                                );
+                                serverLevel.addFreshEntity(entity);
+                            } else {
+                                entity.discard();
+                            }
+                            x = r * Math.sin(theta) * Math.cos(phi) + randomPos;
+                            y = r * Math.cos(theta) + randomPos;
+                            z = r * Math.sin(theta) * Math.sin(phi) + randomPos;
+                            increment++;
+                        }
                     }
                 }
-            }
 
-            System.out.println(
-                      "Pre-calculated entities:   " + spawnedEntities
-                    + ",   entities:   " + increment
-                    + ",   random explosion:   " + randomExplosion
-                    + ",   random increment:   " + randomIncrement
-            );
+                System.out.println(
+                        "Pre-calculated entities:   " + spawnedEntities
+                                + ",   entities:   " + increment
+                                + ",   random explosion:   " + randomExplosion
+                                + ",   random increment:   " + randomIncrement
+                );
 
-            System.out.println(
-                    ",   random entity number:    " + randomEntity
-                    + ",   entity type: " + entityType
-            );
+                System.out.println(
+                        ",   random entity number:    " + randomEntity
+                                + ",   entity type: " + entityType
+                );
 
-            //Plays a sound when a block is clicked
+                //Plays a sound when a block is clicked
             /*
             level.playSound(null,
                     player.getX(),
@@ -152,6 +156,8 @@ public class TNTStickEntitiesClickBlock {
                     0.4F,
                     1.0F);
              */
+
+            }
             return InteractionResult.SUCCESS;
         } else {
             return InteractionResult.CONSUME;

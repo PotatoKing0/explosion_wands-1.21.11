@@ -85,6 +85,7 @@ public class FireballStickClickAir extends Item {
         }
         //Set's the fireball's velocity
         fireballAir.setDeltaMovement(playerLookDir.scale(velocity));
+        fireballAir.addTag("fireball");
         //Plays sound when cliking on air/liquid
         level.playSound(null, player.getX(), player.getY(), player.getZ(),
                 SoundEvents.FIRECHARGE_USE, SoundSource.PLAYERS, 0.4F, 1.0F);

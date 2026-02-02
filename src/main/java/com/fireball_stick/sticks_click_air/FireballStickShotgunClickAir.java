@@ -89,7 +89,7 @@ public class FireballStickShotgunClickAir extends Item {
             //Set's the fireball's velocity
             fireballAir.setDeltaMovement(playerStartDirForward.scale(velocity));
             //Ensures the sound is not played for every single fireball that spawns
-
+            fireballAir.addTag("fireball");
             //Spawns the fireball
             server.addFreshEntity(fireballAir);
             changePos += incremented;

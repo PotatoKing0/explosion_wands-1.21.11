@@ -59,6 +59,7 @@ public class TNTStickUnboundClickAir extends Item {
                 customTnt.setExplodeOnContact(true);
                 customTnt.setExplosionPower(8F);
                 customTnt.setFuse(500);
+                customTnt.addTag("customTnt");
                 return customTnt;
             }
         return null;

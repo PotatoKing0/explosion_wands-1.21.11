@@ -70,6 +70,7 @@ public class TNTStickUnboundClickBlock {
                     customTnt.setDefaultGravity(0.04);
                     //Adds the primed TNT to the world
                     serverLevel.addFreshEntity(customTnt);
+                    customTnt.addTag("customTnt");
                     //Changes the initial angle by the value of angleStep every iteration so the TNTs are not static
                     angle[0] += angleStep;
                     //Height of the cos curve every iteration

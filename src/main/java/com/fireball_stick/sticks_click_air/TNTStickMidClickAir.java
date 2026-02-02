@@ -74,6 +74,7 @@ public class TNTStickMidClickAir extends Item {
             customTnt.setEntityAmount(200);
             customTnt.setKillEntitiesAfterLoop(false);
             customTnt.setYIncrement(0.5);
+            customTnt.addTag("customTnt");
             return customTnt;
         }
 
