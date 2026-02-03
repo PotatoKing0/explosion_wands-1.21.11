@@ -150,7 +150,7 @@ public class TNTStickFallingClickBlock {
                     }
                 }
             }
-
+            /*
             System.out.println(
                     "Pre-calculated entities:   " + spawnedEntities
                             + ",   entities:   " + increment
@@ -158,10 +158,13 @@ public class TNTStickFallingClickBlock {
                             + ",   random increment:   " + 1
             );
 
+             */
+            /*
             System.out.println(
                     ",   random entity number:    " + randomEntity
                             + ",   entity type: " + blockType
             );
+             */
 
 
             //Plays a sound when a block is clicked

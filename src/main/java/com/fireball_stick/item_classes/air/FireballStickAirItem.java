@@ -27,12 +27,13 @@ public class FireballStickAirItem extends Item {
         return FireballStickClickAir.use(this, level, player, hand);
     }
     //Supposed to be overriding actions like opening the villager's trading GUI and riding horses
+    /*
     @Override
     public InteractionResult interactLivingEntity(ItemStack stack, Player player, LivingEntity target, InteractionHand hand) {
         if(player.level().isClientSide()) {
             return InteractionResult.SUCCESS;
         }
-        if(target instanceof Villager) {
+        if(target instanceof LivingEntity) {
             Projectile projectile = FireballStickClickAir.asFireballProjectile(this, player.level(), player, hand);
             if(projectile != null) {
                 player.level().addFreshEntity(projectile);
@@ -41,4 +42,5 @@ public class FireballStickAirItem extends Item {
         }
         return InteractionResult.PASS;
     }
+     */
 }

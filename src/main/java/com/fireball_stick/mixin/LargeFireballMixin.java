@@ -24,7 +24,15 @@ public abstract class LargeFireballMixin {
             method = "onHit",
             at = @At(
                     value = "INVOKE",
-                    target = "Lnet/minecraft/world/level/Level;explode(Lnet/minecraft/world/entity/Entity;DDDFZLnet/minecraft/world/level/Level$ExplosionInteraction;)V"
+                    target = "Lnet/minecraft/world/level/Level;explode(" +
+                            "Lnet/minecraft/world/entity/Entity;" +
+                            "D" +
+                            "D" +
+                            "D" +
+                            "F" +
+                            "Z" +
+                            "Lnet/minecraft/world/level/Level$ExplosionInteraction;" +
+                            ")V"
             )
     )
 

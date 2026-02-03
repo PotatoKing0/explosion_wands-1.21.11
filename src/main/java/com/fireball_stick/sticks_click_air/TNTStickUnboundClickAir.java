@@ -60,11 +60,11 @@ public class TNTStickUnboundClickAir extends Item {
                 customTnt.setExplosionPower(8F);
                 customTnt.setFuse(500);
                 customTnt.addTag("customTnt");
+                if(customTnt.touchingUnloadedChunk()) {
+                customTnt.discard();
+                }
                 return customTnt;
             }
         return null;
 }
 }
-//TODO: change explosion effects to be larger maybe
-//Different explosion effects (f.ex. flame particles, like Mad Maggie's ult)
-//Effect after getFuse = 0

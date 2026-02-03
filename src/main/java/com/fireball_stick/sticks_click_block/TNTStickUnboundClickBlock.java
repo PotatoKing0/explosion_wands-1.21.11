@@ -31,7 +31,7 @@ public class TNTStickUnboundClickBlock {
 
         if (level instanceof ServerLevel serverLevel && player != null && !level.isClientSide()) {
             int spawnHeight = 30;
-            int reach = 1000;
+            int reach = 360;
             /*
             double xDir = clickedPos.getX();
             double yDir = clickedPos.getY();
@@ -70,6 +70,9 @@ public class TNTStickUnboundClickBlock {
                     customTnt.setDefaultGravity(0.04);
                     //Adds the primed TNT to the world
                     serverLevel.addFreshEntity(customTnt);
+                    if(customTnt.touchingUnloadedChunk()) {
+                        customTnt.discard();
+                    }
                     customTnt.addTag("customTnt");
                     //Changes the initial angle by the value of angleStep every iteration so the TNTs are not static
                     angle[0] += angleStep;

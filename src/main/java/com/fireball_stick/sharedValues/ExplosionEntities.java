@@ -30,7 +30,7 @@ public class ExplosionEntities {
 
     public static double r = 2;
     public static int spawnHeight = 20;
-    public static int reach = 128;
+    public static int reach = 360;
     public static int spawnedEntities = (int) ((Math.floor(lessThanTheta / incrementTheta) + 1) * (Math.floor(lessThanPhi / incrementPhi) + 1));
     public static int minRandomEntity = 1;
     public static int maxRandomEntity = spawnedEntities;

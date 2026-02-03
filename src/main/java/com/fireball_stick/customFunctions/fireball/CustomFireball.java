@@ -28,7 +28,7 @@ public class CustomFireball extends Fireball {
             );
             discard();
             serverLevel.sendParticles(ParticleTypes.COPPER_FIRE_FLAME, getX(), getY(), getZ(), 700, 3, 3, 3, 1);
-            System.out.println("Works!");
+            //System.out.println("Works!");
         }
     }
 }

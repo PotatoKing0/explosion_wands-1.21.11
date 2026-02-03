@@ -56,10 +56,10 @@ public class FireballStickClickBlock {
         Level level = context.getLevel();
         Player player = context.getPlayer();
          */
-        int reach = 1000;
+        int reach = 360;
         int spawnHeight = 50;
         double amplitude = 15;
-        int fireballAmount = 50;
+        int fireballAmount = 40;
         int explosionPower = 15;
         //Direction the fireballs will head towards, and the speed of the fireballs
         double xDir = 0;
@@ -109,6 +109,9 @@ public class FireballStickClickBlock {
                 largeFireball.setDeltaMovement(xDir, yDir, zDir);
                 largeFireball.addTag("fireball");
                 serverLevel.addFreshEntity(largeFireball);
+                if(largeFireball.touchingUnloadedChunk()) {
+                    largeFireball.discard();
+                }
                 angle += angleStep;
                 yDir = yDir;
             }

@@ -132,19 +132,20 @@ public class TNTStickEntitiesClickBlock {
                         }
                     }
                 }
-
+                /*
                 System.out.println(
                         "Pre-calculated entities:   " + spawnedEntities
                                 + ",   entities:   " + increment
                                 + ",   random explosion:   " + randomExplosion
                                 + ",   random increment:   " + randomIncrement
                 );
-
+                 */
+                /*
                 System.out.println(
                         ",   random entity number:    " + randomEntity
                                 + ",   entity type: " + entityType
                 );
-
+                 */
                 //Plays a sound when a block is clicked
             /*
             level.playSound(null,

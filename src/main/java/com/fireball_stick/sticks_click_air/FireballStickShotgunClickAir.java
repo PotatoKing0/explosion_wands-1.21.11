@@ -42,7 +42,7 @@ public class FireballStickShotgunClickAir extends Item {
         if(level instanceof ServerLevel server) {
         BlockHitResult blockHitResult = getPlayerPOVHitResult(level, player, ClipContext.Fluid.NONE);
         //Max distance we can click on an entity
-        int reach = 1000;
+        int reach = 360;
         double incremented = 2;
         double changePos = 0;
         double fireballAmount = 50;
@@ -53,19 +53,34 @@ public class FireballStickShotgunClickAir extends Item {
         double dirX = player.getX();
         double dirY = player.getY();
         double dirZ = player.getZ();
+        //Looking directly up
+            double directlyUpDir = Math.toRadians(player.getXRot() + 90);
+            //Looking directly down
+            double directlyDownDir = Math.toRadians(player.getXRot() - 90);
+            /*
+            if(directlyUpDir == 0) {
+                System.out.println("Directly up!");
+            }
+            if(directlyDownDir == 0) {
+                System.out.println("Directly down!");
+            }
+             */
         //Vec3 dir = new Vec3(dirX, dirY, dirZ);
-        Vec3 playerStartDirForward = player.getLookAngle();
+        Vec3 playerStartDirForward = player.getLookAngle().normalize();
+        Vec3 directlyUp = new Vec3(0,1,0);
+        if(directlyUpDir == 0 || directlyDownDir == 0) {
+            directlyUp = new Vec3(0,0,1);
+        }
         Vec3 playerStartDir = player.getEyePosition();
         Vec3 playerEndDir = playerStartDir.add(playerStartDirForward.scale(reach));
         playerStartDirForward.add(dirX, dirY, dirZ).normalize();
             final double playerLookAngle = Math.toRadians(player.getXRot());
             //Sets the x and z directions to these numbers as a workaround for when we look directly up or down, which makes
             //the vectors be (0,0,0) no matter what. This should be indistinguishable compared to if they are 0
-            Vec3 playerStartDirRight = playerStartDirForward.cross(new Vec3(0.00001,1,0.00001)).normalize();
-        Vec3 playerStartDirLeft = playerStartDirRight.scale(-1);
+            Vec3 playerStartDirRight = playerStartDirForward.cross(directlyUp).normalize();
+        Vec3 playerStartDirLeft = playerStartDirRight.cross(playerStartDirForward).normalize();
         float yaw = player.getYRot();
         double rad = Math.toRadians(yaw);
-        Vec3 right = new Vec3(-Math.sin(rad), 0, Math.cos(rad)).normalize();
         //playerLookDir.add(0, 1000, 0).normalize();
         for(int i = 0; i < fireballAmount; i++) {
             LargeFireball fireballAir = new LargeFireball(level, player, playerStartDirForward, explosionPowerAir);
@@ -74,7 +89,7 @@ public class FireballStickShotgunClickAir extends Item {
                     Vec3 fireballInAirPosition = playerStartDir.add(playerStartDirForward.scale(2.5)) //in front
                             //Ensures that the fireballs are evenly distributed in front of the player
                             .add(playerStartDirRight.scale((incremented * (fireballAmount / 2)) - (changePos + incremented / 2))) //left/right
-                            .add(0, -0.25, 0); //up/down
+                            .add(directlyUp.scale(-0.25)); //up/down
                     //Sets the fireball's position
                     fireballAir.moveOrInterpolateTo(fireballInAirPosition);
             }
@@ -92,6 +107,9 @@ public class FireballStickShotgunClickAir extends Item {
             fireballAir.addTag("fireball");
             //Spawns the fireball
             server.addFreshEntity(fireballAir);
+            if(fireballAir.touchingUnloadedChunk()) {
+                fireballAir.discard();
+            }
             changePos += incremented;
         }
             level.playSound(null, player.getX(), player.getY(), player.getZ(),
@@ -102,4 +120,4 @@ public class FireballStickShotgunClickAir extends Item {
  }
 
  //TODO: When we look directly up/down, the fireballs' positions are the exact same. Ensure they are
-//spread out the same way as when we look any other direction - band air-fixed
+//spread out the same way as when we look any other direction - band aid-fixed

@@ -94,8 +94,7 @@ public class TNTFireballStickExplosionClickBlock {
                             serverLevel.addFreshEntity(customTnt);
                             customTnt.setFuse(fuse);
                             customTnt.setExplosionPower(0F);
-
-                            System.out.println("TNTs spawned: " + (increment + 1));
+                            //System.out.println("TNTs spawned: " + (increment + 1));
                         }
                         //Creates primed TNTs every iteration
                         //CustomTnt customTnt = ModEntities.CUSTOM_TNT.create(level, EntitySpawnReason.TRIGGERED);
@@ -127,18 +126,20 @@ public class TNTFireballStickExplosionClickBlock {
                     }
                 }
             }
-
+            /*
             System.out.println(
                       "Pre-calculated entities:   " + spawnedEntities
                     + ",   entities:   " + increment
                     + ",   random explosion:   " + randomExplosion
                     + ",   random increment:   " + randomIncrement
             );
-
+             */
+            /*
             System.out.println(
                     ",   random entity number:    " + randomEntity
                     + ",   entity type: " + entityType
             );
+             */
             //Plays a sound when a block is clicked
             /*
             level.playSound(null,

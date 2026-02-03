@@ -3,7 +3,6 @@
 	"package": "com.fireball_stick.mixin",
 	"compatibilityLevel": "JAVA_25",
 	"mixins": [
-		"CustomTntMixin",
 		"ExampleMixin",
 		"LargeFireballMixin",
 		"LivingEntityMixin"

@@ -74,7 +74,7 @@ public class TNTStickClickBlock {
 
 		if (level instanceof ServerLevel serverLevel && player != null && !level.isClientSide()) {
 			TickQueue queue = TickQueueManager.createQueue(tntAmount, 4);
-			int reach = 1000;
+			int reach = 360;
 			final double[] spawnHeight = {30};
 			/*
 			double xDir = clickedPos.getX();
@@ -134,6 +134,9 @@ public class TNTStickClickBlock {
 							//Adds the primed TNT to the world
 							serverLevel.addFreshEntity(customTnt);
 							customTnt.addTag("customTnt");
+							if(customTnt.touchingUnloadedChunk()) {
+								customTnt.discard();
+							}
 							//Kind of a hacky way to play a sound only at the very start of the loop
 							if(finalI1 == 0) {
 								level.playSound(null,

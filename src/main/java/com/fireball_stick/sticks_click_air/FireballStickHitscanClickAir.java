@@ -124,6 +124,9 @@ public class FireballStickHitscanClickAir extends Item {
                         //Sound effect when clicking on entity
                             level.playSound(null, dirX, dirY, dirZ, SoundEvents.PLAYER_LEVELUP, SoundSource.NEUTRAL, 0.2F, 1.0F);
                         fireballAir.addTag("fireball");
+                        if(fireballAir.touchingUnloadedChunk()) {
+                            fireballAir.discard();
+                        }
                         return fireballAir;
                     }
                 }

@@ -158,6 +158,10 @@ public class CustomTnt extends PrimedTnt {
             if(entityToSpawn == null) {
                 serverLevel.sendParticles(ParticleTypes.SOUL_FIRE_FLAME, getX(), getY(), getZ(), 700, 3, 3, 3, 0.2);
             }
+            if(!discardTNT) {
+                serverLevel.sendParticles(ParticleTypes.FLAME, getX(), getY() - 1, getZ(), 700, 1.5, 1.5, 1.5, 0.1);
+            }
+
             exploded = true;
         }
     }
@@ -256,46 +260,48 @@ public class CustomTnt extends PrimedTnt {
     }
 
     protected void discardOnFirstUse() {
-        int currentTick = (int) level().getGameTime();
-        int ticksSinceLastExplosion;
-        //Checks the time between the primedTNT explosions
-        if(lastExplosionTick == -1 && explosionAmount == 0) {
-            ticksSinceLastExplosion = 20;
-            explosionAmount++;
-        } else {
-            ticksSinceLastExplosion = currentTick - lastExplosionTick;
-            explosionAmount++;
-        }
-        BlockPos pos = this.blockPosition();
-        //BlockState state = level().getBlockState(pos);
-        //Block block = state.getBlock();
-        //Vec3 explosionPos = this.position();
-        //Vec3 blockCenter = Vec3.atCenterOf(pos);
-        //double distance = explosionPos.distanceTo(blockCenter);
-        //double maxRadius = explosionPower * 2.0;
-        //float resistance = getBlockState().getBlock().getExplosionResistance();
-        //float effectivePower = explosionPower * (1.0F - (float)(distance / maxRadius));
-        //Checks if the primedTNT touches water
-        boolean inWater = level().getFluidState(pos).is(FluidTags.WATER);
-        if(exploded) {
-            setDefaultGravity(0.30);
-            lastExplosionTick = (int) level().getGameTime();
-        }
-        //Failsafe if the time between the primedTNT explosions is less than or equal to 1, which prevents the primedTNT
-        //from continuously exploding in one spot, aka when its effective explosion power is less than the block it's standing on
-        if(discardTNT
-                || ticksSinceLastExplosion <= 1
-                || explosionAmount >= 200) {
-            this.discard();
-        }
-
-        if(level() instanceof ServerLevel serverLevel && !discardTNT) {
-            if(ticksSinceLastExplosion > 5 || (ticksSinceLastExplosion <= 5 && explosionAmount % 5 == 1)) {
-                serverLevel.sendParticles(ParticleTypes.FLAME, getX(), getY() - 1, getZ(), 700, 1.5, 1.5, 1.5, 0.1);
+        if (level() instanceof ServerLevel serverLevel) {
+            int currentTick = (int) level().getGameTime();
+            int ticksSinceLastExplosion;
+            //Checks the time between the primedTNT explosions
+            if (lastExplosionTick == -1 && explosionAmount == 0) {
+                ticksSinceLastExplosion = 20;
+                explosionAmount++;
+            } else {
+                ticksSinceLastExplosion = currentTick - lastExplosionTick;
+                explosionAmount++;
             }
+            BlockPos pos = this.blockPosition();
+            //BlockState state = level().getBlockState(pos);
+            //Block block = state.getBlock();
+            //Vec3 explosionPos = this.position();
+            //Vec3 blockCenter = Vec3.atCenterOf(pos);
+            //double distance = explosionPos.distanceTo(blockCenter);
+            //double maxRadius = explosionPower * 2.0;
+            //float resistance = getBlockState().getBlock().getExplosionResistance();
+            //float effectivePower = explosionPower * (1.0F - (float)(distance / maxRadius));
+            //Checks if the primedTNT touches water
+            boolean inWater = level().getFluidState(pos).is(FluidTags.WATER);
+            if (exploded) {
+                setDefaultGravity(0.30);
+                lastExplosionTick = (int) level().getGameTime();
+            }
+            //Failsafe if the time between the primedTNT explosions is less than or equal to 1, which prevents the primedTNT
+            //from continuously exploding in one spot, aka when its effective explosion power is less than the block it's standing on
+            if (discardTNT) {
+                this.discard();
+            }
+            if(ticksSinceLastExplosion <= 1 || explosionAmount >= 200) {
+                    this.discard();
+                serverLevel.sendParticles(ParticleTypes.SOUL_FIRE_FLAME, getX(), getY() + 2, getZ(), 2000, 4, 4, 4, 0.1);
+            }
+
+                if (ticksSinceLastExplosion > 5 || (ticksSinceLastExplosion <= 5 && explosionAmount % 5 == 1) && !discardTNT) {
+                    //serverLevel.sendParticles(ParticleTypes.FLAME, getX(), getY() - 1, getZ(), 700, 1.5, 1.5, 1.5, 0.1);
+            }
+            //System.out.println("Last explosion tick: " + ticksSinceLastExplosion);
+            //System.out.println("Explosion amount: " + explosionAmount);
         }
-        //System.out.println("Last explosion tick: " + ticksSinceLastExplosion);
-        //System.out.println("Explosion amount: " + explosionAmount);
     }
 
     //Getters and setters

@@ -75,6 +75,9 @@ public class TNTStickMidClickAir extends Item {
             customTnt.setKillEntitiesAfterLoop(false);
             customTnt.setYIncrement(0.5);
             customTnt.addTag("customTnt");
+            if(customTnt.touchingUnloadedChunk()) {
+                customTnt.discard();
+            }
             return customTnt;
         }
 

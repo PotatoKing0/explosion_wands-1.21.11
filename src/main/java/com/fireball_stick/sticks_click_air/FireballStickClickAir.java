@@ -45,7 +45,7 @@ public class FireballStickClickAir extends Item {
         double randomDistr3 = min + random.nextDouble() * (max - min);
         BlockHitResult blockHitResult = getPlayerPOVHitResult(level, player, ClipContext.Fluid.NONE);
         //Max distance we can click on an entity
-        int reach = 1000;
+        int reach = 360;
         //Clicks on air/liquid
         int explosionPowerAir = 60;
         //Clicks on entity
@@ -90,6 +90,9 @@ public class FireballStickClickAir extends Item {
         level.playSound(null, player.getX(), player.getY(), player.getZ(),
                 SoundEvents.FIRECHARGE_USE, SoundSource.PLAYERS, 0.4F, 1.0F);
         //Spawns the fireball
+        if(fireballAir.touchingUnloadedChunk()) {
+            fireballAir.discard();
+        }
         return fireballAir;
     }
 }
