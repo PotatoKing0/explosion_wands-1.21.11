@@ -3,13 +3,13 @@
 	"id": "explosion_wands",
 	"version": "${version}",
 	"name": "Explosion Wands",
-	"description": "This is an example description! Tell everyone what your mod is about!",
+	"description": "A fun mod that adds a variety of explosion wands to the game. Use at your own discretion!",
 	"authors": [
-		"Me!"
+		"PotatoKing"
 	],
 	"contact": {
-		"homepage": "https://fabricmc.net/",
-		"sources": "https://github.com/FabricMC/fabric-example-mod"
+		"homepage": "https://modrinth.com/project/explosion-wands",
+		"sources": "https://github.com/PotatoKing0/explosion_wands-1.21.11"
 	},
 	"license": "CC0-1.0",
 	"icon": "icon.png",

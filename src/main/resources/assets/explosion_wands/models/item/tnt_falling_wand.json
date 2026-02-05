@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "explosion_wands:item/tnt_falling_wand"
+  }
+}

@@ -4,6 +4,7 @@ public class ExplosionEntities {
     private ExplosionEntities() {}
     public static int maxEntities = 1028;
     public static int fuse = 0;
+    public static int fuse2 = 50;
     //This makes the most difference to how far the entities fly
     public static float minExplosion = 2F;
     public static float maxExplosion = 4F;

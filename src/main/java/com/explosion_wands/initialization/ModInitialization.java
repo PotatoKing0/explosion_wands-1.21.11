@@ -92,6 +92,11 @@ public class ModInitialization implements ModInitializer {
         ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.COMBAT)
                 .register(entries -> entries.accept(ModItems.TNT_FIREBALL_STICK_EXPLOSION_BLOCK));
 
+        //TNT FALLING WAND
+        ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.TOOLS_AND_UTILITIES)
+                .register(entries -> entries.accept(ModItems.TNT_FALLING_WAND));
+        ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.COMBAT)
+                .register(entries -> entries.accept(ModItems.TNT_FALLING_WAND));
         //Makes the tick-based placement of TNT work properly
         ServerTickEvents.END_SERVER_TICK.register(server -> TickQueueManager.tick());
     }

@@ -144,6 +144,17 @@ public class ModItems {
                             new Item.Properties()
                                     .stacksTo(1)
                                     .setId(TNT_FIREBALL_STICK_EXPLOSION_BLOCK_KEY)));
+
+    //TNT FALLING WAND
+    public static final ResourceKey<Item> TNT_FALLING_WAND_KEY =
+            key("tnt_falling_wand");
+
+    public static final Item TNT_FALLING_WAND =
+            register(TNT_FALLING_WAND_KEY,
+                    new TNTFallingWandItem(
+                            new Item.Properties()
+                                    .stacksTo(1)
+                                    .setId(TNT_FALLING_WAND_KEY)));
 //HELPER METHODS
     //Creating the item's identity
     private static ResourceKey<Item> key(String name) {
